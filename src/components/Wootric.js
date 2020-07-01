@@ -1,8 +1,8 @@
-import React from "react";
-import * as Defaults from "./config/defaults";
+import React, { useEffect } from "react";
+import * as Defaults from "../config/defaults";
 
-class Wootric extends React.Component {
-  componentDidMount() {
+const Wootric = () => {
+  const initializeWootric = () => {
     let setupScript = document.createElement("script");
     setupScript.type = "text/javascript";
     setupScript.id = "wootric-settings";
@@ -27,17 +27,24 @@ class Wootric extends React.Component {
     beacon.async = true;
 
     beacon.src = "https://cdn.wootric.com/wootric-sdk.js";
-    beacon.onload = function () {
-      window.wootric("run");
-    };
+    // beacon.onload = function () {
+    //   window.wootric("run");
+    // };
     if (document.getElementById("wootric-beacon") == null) {
       document.body.appendChild(beacon);
     }
-  }
+  };
 
-  render() {
-    return <div />;
-  }
-}
+  useEffect(() => {
+    initializeWootric();
+  }, []);
+
+  return (
+    <div>
+      <h2>Survey on click</h2>
+      <button onClick={() => window.wootric("run")}>Survey</button>
+    </div>
+  );
+};
 
 export default Wootric;
